@@ -56,7 +56,7 @@ public class Snake extends Canvas implements Runnable, KeyListener
 			if (hs.createNewFile())
 			{
 				BufferedWriter bw = new BufferedWriter(new FileWriter(hs));
-				bw.write(highscore);
+				bw.write("0");
 				bw.close();
 			}
 			Scanner scan = new Scanner(hs);
@@ -119,14 +119,17 @@ public class Snake extends Canvas implements Runnable, KeyListener
 			try
 			{
 				BufferedWriter bw = new BufferedWriter(new FileWriter(hs));
-				bw.write(highscore);
+				bw.write(""+highscore);
 				bw.close();
 				System.out.println("NEW HIGHSCORE!");
+				System.out.println("Here");
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
 			}
+			oldscore = highscore;
+			highscore = 0;
 		}
 		squares.clear();
 		for (int x = 0; x < stagesize.width; x++)
@@ -297,15 +300,21 @@ public class Snake extends Canvas implements Runnable, KeyListener
 		g2d.setFont(new Font("Arial", 0, 10));
 		g2d.setColor(Color.black);
 	    FontMetrics fm = g2d.getFontMetrics();
-	    String stringTime = Integer.toString(highscore);
+	    String stringTime = "Highscore: "+Integer.toString(oldscore);
 	    Rectangle2D r = fm.getStringBounds(stringTime, g2d);
 	    int x = (this.getWidth() - (int) r.getWidth()) / 2;
 	    int y = (10 + fm.getAscent());
 	    g2d.drawString(stringTime, x, y);
 	    fm = g2d.getFontMetrics();
-	    String stringDirections = "Use wasd to move";
+	    stringTime = "Score: "+Integer.toString(highscore);
 	    r = fm.getStringBounds(stringTime, g2d);
-	    x = (this.getWidth() - (int) r.getWidth()) / 2-40;
+	    x = (this.getWidth() - (int) r.getWidth()) / 2;
+	    y = (20 + fm.getAscent());
+	    g2d.drawString(stringTime, x, y);
+	    fm = g2d.getFontMetrics();
+	    String stringDirections = "Use wasd to move";
+	    r = fm.getStringBounds(stringDirections, g2d);
+	    x = (this.getWidth() - (int) r.getWidth()) /2;
 	    y = (fm.getAscent());
 	    g2d.drawString(stringDirections, x, y);
 		g2d.dispose();
